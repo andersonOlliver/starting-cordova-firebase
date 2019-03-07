@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
+    />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hello World</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/jquery.mobile.custom.structure-1.5.0-pre.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/jquery.mobile.custom.theme-1.5.0-pre.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/jquery.mobile.icons.external-png.css"
+    />
+  </head>
+  <body>
+    <div data-role="page" id="pg-registro">
+      <div data-role="header">
+        <div data-role="navbar">
+          <ul>
+            <li>
+              <a
+                href="#pg-registro"
+                data-transition="none"
+                data-ui-icon="ui-icon-plus"
+                class="ui-btn-active ui-state-persist"
+                >Registrar</a
+              >
+            </li>
+            <li>
+              <a
+                href="#pg-login"
+                data-transition="none"
+                data-ui-icon="ui-icon-plus"
+                >Entrar</a
+              >
+            </li>
+          </ul>
+        </div>
+        <h1>Registrar</h1>
+      </div>
+      <div data-role="content">
+        <label for="email-cadastro">E-mail</label>
+        <input id="email-cadastro" type="text" data-clear-btn="true" />
+
+        <label for="password-cadastro">Senha</label>
+        <input
+          id="password-cadastro"
+          type="password"
+          data-clear-btn="true"
+          onkeypress="onKeyPressEnter(event)"
+        />
+        <button onclick="registrar()">Cadastrar</button>
+      </div>
+      <div class="footer" data-role="footer">
+        <h4>PAW II</h4>
+      </div>
+    </div>
+    <div data-role="page" id="pg-login">
+      <div data-role="header">
+        <div data-role="navbar">
+          <ul>
+            <li>
+              <a
+                href="#pg-registro"
+                data-transition="none"
+                data-ui-icon="ui-icon-plus"
+                >Registrar</a
+              >
+            </li>
+            <li>
+              <a
+                href="#pg-login"
+                data-transition="none"
+                data-ui-icon="ui-icon-plus"
+                class="ui-btn-active ui-state-persist"
+                >Entrar</a
+              >
+            </li>
+          </ul>
+        </div>
+        <h1>Entrar</h1>
+      </div>
+      <div data-role="content">
+        <label for="email-login">E-mail</label>
+        <input id="email-login" type="text" data-clear-btn="true" />
+
+        <label for="password-login">Senha</label>
+        <input
+          id="password-login"
+          type="password"
+          data-clear-btn="true"
+          onkeypress="onKeyPressEnter(event)"
+        />
+
+        <button onclick="logar()">Logar</button>
+      </div>
+      <div class="footer" data-role="footer">
+        <h4>PAW II</h4>
+      </div>
+    </div>
+    <div data-role="page" id="pg-lista-aluno">
+      <div data-role="header">
+        <div data-role="navbar">
+          <ul>
+            <li>
+              <a
+                href="#pg-lista-aluno"
+                data-transition="none"
+                class="ui-btn-active ui-state-persist"
+                data-ui-icon="ui-icon-plus"
+                >Lista Alunos</a
+              >
+            </li>
+            <li>
+              <a
+                onclick="logout()"
+                data-transition="none"
+                data-ui-icon="ui-icon-plus"
+                >Sair</a
+              >
+            </li>
+          </ul>
+        </div>
+        <h1>Forum Alunos</h1>
+      </div>
+      <div data-role="content">
+        <ul id="messages">
+          <li id="empty">Sem mensagens para exibir</li>
+        </ul>
+      </div>
+
+      <div class="footer" data-role="footer">
+        <div data-role="controlgroup" data-type="horizontal">
+          <input
+            type="text"
+            id="input-message"
+            onkeypress="onKeyPressEnter(event)"
+            data-wrapper-class="controlgroup-textinput ui-btn"
+          />
+          <button
+            id="btn-enviar-msg"
+            class="ui-btn ui-shadow ui-corner-all"
+            onclick="adicionarMensagem()"
+          >
+            Enviar mensagen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script
+      type="text/javascript"
+      src="js/jquery.mobile-1.5.0-pre.custom.min.js"
+    ></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/dados.js"></script>
+
+    <!-- FIREBASE  -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase-functions.js"></script>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "<API_KEY>",
+        authDomain: "<PROJECT_ID>.firebaseapp.com",
+        databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+        projectId: "<PROJECT_ID>",
+        storageBucket: "<BUCKET>.appspot.com",
+        messagingSenderId: "<SENDER_ID>"
+      };
+      firebase.initializeApp(config);
+
+      function startLoading() {
+        $.mobile.loading("show", {
+          text: $.mobile.loader.prototype.options.text,
+          textVisible: $.mobile.loader.prototype.options.textVisible,
+          theme: $.mobile.loader.prototype.options.theme,
+          textonly: "true",
+          html: ""
+        });
+      }
+
+      function finishLoading() {
+        $.mobile.loading("hide");
+      }
+
+      function onKeyPressEnter(e) {
+        if (e.key == "Enter") {
+          if (e.target.id === "password-cadastro") {
+            registrar();
+          } else if (e.target.id === "password-login") {
+            logar();
+          } else if (e.target.id === "input-message") {
+            adicionarMensagem();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
